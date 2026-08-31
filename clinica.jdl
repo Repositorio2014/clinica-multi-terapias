@@ -1,0 +1,100 @@
+// CLINICA MULTI-TERAPIAS - Modelo corrigido
+
+enum TipoEspecialidade {
+  PSIQUIATRIA,
+  PSICOLOGIA,
+  PSICOPEDAGOGIA,
+  FONOAUDIOLOGIA,
+  TERAPIA_OCUPACIONAL,
+  NEUROPSICOLOGIA,
+  OUTRA
+}
+
+enum StatusAgendamento {
+  AGENDADO,
+  CONFIRMADO,
+  ATENDIDO,
+  FALTA,
+  CANCELADO
+}
+
+enum TipoProntuario {
+  ANAMNESE,
+  EVOLUCAO,
+  LAUDO,
+  ATESTADO,
+  ENCAMINHAMENTO
+}
+
+entity Paciente {
+  nome String required
+  cpf String required unique
+  dataNascimento LocalDate required
+  telefone String required
+  email String
+  nomeResponsavel String
+  telefoneResponsavel String
+  endereco String
+  convenio String
+  observacoes TextBlob
+  ativo Boolean required
+}
+
+entity Profissional {
+  nome String required
+  cpf String required unique
+  registroConselho String required
+  telefone String required
+  email String required unique
+  ativo Boolean required
+  valorSessao BigDecimal
+}
+
+entity Especialidade {
+  nome TipoEspecialidade required
+  descricao String
+}
+
+entity Sala {
+  nome String required
+  descricao String
+  capacidade Integer
+}
+
+entity Agenda {
+  dataHoraInicio ZonedDateTime required
+  dataHoraFim ZonedDateTime required
+  status StatusAgendamento required
+  observacoes String
+  valorCobrado BigDecimal
+}
+
+entity Prontuario {
+  tipo TipoProntuario required
+  dataAtendimento ZonedDateTime required
+  titulo String required
+  conteudo TextBlob required
+  confidencial Boolean required
+}
+
+// RELACIONAMENTOS CORRIGIDOS - sem duplicidade
+
+relationship ManyToMany {
+  Profissional{especialidades} to Especialidade{profissionais}
+}
+
+relationship ManyToOne {
+  Agenda{paciente(nome) required} to Paciente{agendas}
+  Agenda{profissional(nome) required} to Profissional
+  Agenda{sala(nome)} to Sala
+  Agenda{especialidade(nome) required} to Especialidade
+  Prontuario{paciente(nome) required} to Paciente{prontuarios}
+  Prontuario{profissional(nome) required} to Profissional
+  Prontuario{agenda} to Agenda
+  Prontuario{especialidade(nome) required} to Especialidade
+}
+
+dto Paciente, Profissional, Agenda, Prontuario, Especialidade, Sala with mapstruct
+paginate Paciente, Profissional, Agenda, Prontuario with pagination
+service Paciente, Profissional, Agenda, Prontuario with serviceClass
+filter Paciente, Agenda, Prontuario
