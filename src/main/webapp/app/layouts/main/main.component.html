@@ -1,13 +1,9 @@
-<jhi-page-ribbon></jhi-page-ribbon>
-
-<div>
-  <router-outlet name="navbar"></router-outlet>
-</div>
-
-<div class="container-fluid">
-  <div class="card jh-card">
-    <router-outlet></router-outlet>
+<div style="display: flex; min-height: calc(100vh - 64px)">
+  <div style="width: 230px; min-width: 230px; background: #fff; border-right: 1px solid #ecd6e3">
+    <jhi-sidebar></jhi-sidebar>
   </div>
-
-  <jhi-footer></jhi-footer>
+  <div style="flex: 1; background: #f9f1f7; padding: 0">
+    <router-outlet></router-outlet>
+    <jhi-footer></jhi-footer>
+  </div>
 </div>

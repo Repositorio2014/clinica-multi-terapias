@@ -1,23 +1,31 @@
-/* ==========================================================================
-Main page styles
-========================================================================== */
-
-.hipster {
-  display: inline-block;
-  width: 347px;
-  height: 497px;
-  background: url('../../content/images/jhipster_family_member_1.svg') no-repeat center top;
-  background-size: contain;
+.c-pacientes {
+  border-left-color: #5a365f !important;
+}
+.c-pacientes h2,
+.c-pacientes a {
+  color: #5a365f !important;
 }
 
-/* wait autoprefixer update to allow simple generation of high pixel density media query */
-@media only screen and (-webkit-min-device-pixel-ratio: 2),
-  only screen and (-moz-min-device-pixel-ratio: 2),
-  only screen and (-o-min-device-pixel-ratio: 2/1),
-  only screen and (min-resolution: 192dpi),
-  only screen and (min-resolution: 2dppx) {
-  .hipster {
-    background: url('../../content/images/jhipster_family_member_1.svg') no-repeat center top;
-    background-size: contain;
-  }
+.c-agenda {
+  border-left-color: #c26b8a !important;
+}
+.c-agenda h2,
+.c-agenda a {
+  color: #c26b8a !important;
+}
+
+.c-prof {
+  border-left-color: #8b5a9e !important;
+}
+.c-prof h2,
+.c-prof a {
+  color: #8b5a9e !important;
+}
+
+.c-salas {
+  border-left-color: #e891b5 !important;
+}
+.c-salas h2,
+.c-salas a {
+  color: #d16d94 !important;
 }

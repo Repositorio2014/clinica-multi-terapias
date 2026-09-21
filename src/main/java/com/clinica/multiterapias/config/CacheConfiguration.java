@@ -50,6 +50,16 @@ public class CacheConfiguration {
             createCache(cm, com.clinica.multiterapias.domain.User.class.getName());
             createCache(cm, com.clinica.multiterapias.domain.Authority.class.getName());
             createCache(cm, com.clinica.multiterapias.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.clinica.multiterapias.domain.Agenda.class.getName());
+            createCache(cm, com.clinica.multiterapias.domain.Especialidade.class.getName());
+            createCache(cm, com.clinica.multiterapias.domain.Especialidade.class.getName() + ".profissionais");
+            createCache(cm, com.clinica.multiterapias.domain.Paciente.class.getName());
+            createCache(cm, com.clinica.multiterapias.domain.Paciente.class.getName() + ".agendas");
+            createCache(cm, com.clinica.multiterapias.domain.Paciente.class.getName() + ".prontuarios");
+            createCache(cm, com.clinica.multiterapias.domain.Profissional.class.getName());
+            createCache(cm, com.clinica.multiterapias.domain.Profissional.class.getName() + ".especialidades");
+            createCache(cm, com.clinica.multiterapias.domain.Prontuario.class.getName());
+            createCache(cm, com.clinica.multiterapias.domain.Sala.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }
