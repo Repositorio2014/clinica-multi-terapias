@@ -1,0 +1,32 @@
+{
+  "clinicaMultiTerapiasApp": {
+    "prontuario": {
+      "home": {
+        "title": "Prontuarios",
+        "refreshListLabel": "Atualizar lista",
+        "createLabel": "Criar novo Prontuario",
+        "createOrEditLabel": "Criar ou editar Prontuario",
+        "notFound": "Nenhum Prontuario encontrado"
+      },
+      "created": "Um novo Prontuario foi criado com o identificador {{ param }}",
+      "updated": "Um Prontuario foi atualizado com o identificador {{ param }}",
+      "deleted": "Um Prontuario foi excluído com o identificador {{ param }}",
+      "delete": {
+        "question": "Tem certeza de que deseja excluir Prontuario {{ id }}?"
+      },
+      "detail": {
+        "title": "Prontuario"
+      },
+      "id": "ID",
+      "tipo": "Tipo",
+      "dataAtendimento": "Data Atendimento",
+      "titulo": "Titulo",
+      "conteudo": "Conteudo",
+      "confidencial": "Confidencial",
+      "paciente": "Paciente",
+      "profissional": "Profissional",
+      "agenda": "Agenda",
+      "especialidade": "Especialidade"
+    }
+  }
+}

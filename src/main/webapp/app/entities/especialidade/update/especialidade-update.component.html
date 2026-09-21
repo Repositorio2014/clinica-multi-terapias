@@ -1,0 +1,82 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-especialidade-heading"
+        data-cy="EspecialidadeCreateUpdateHeading"
+        jhiTranslate="clinicaMultiTerapiasApp.especialidade.home.createOrEditLabel"
+      >
+        Criar ou editar Especialidade
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="clinicaMultiTerapiasApp.especialidade.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let nomeRef = editForm.get('nome')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_nome" jhiTranslate="clinicaMultiTerapiasApp.especialidade.nome">Nome</label>
+          <select class="form-control" name="nome" formControlName="nome" id="field_nome" data-cy="nome">
+            <option [ngValue]="null">{{ 'clinicaMultiTerapiasApp.TipoEspecialidade.null' | translate }}</option>
+            @for (tipoEspecialidade of tipoEspecialidadeValues; track $index) {
+              <option [value]="tipoEspecialidade">
+                {{ 'clinicaMultiTerapiasApp.TipoEspecialidade.' + tipoEspecialidade | translate }}
+              </option>
+            }
+          </select>
+          @if (nomeRef.invalid && (nomeRef.dirty || nomeRef.touched)) {
+            <div>
+              @if (editForm.get('nome')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_descricao" jhiTranslate="clinicaMultiTerapiasApp.especialidade.descricao">Descricao</label>
+          <input type="text" class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao" />
+        </div>
+
+        <div class="mb-3">
+          <label for="field_profissionais" jhiTranslate="clinicaMultiTerapiasApp.especialidade.profissionais">Profissionais</label>
+          <select
+            class="form-control"
+            id="field_profissionais"
+            data-cy="profissionais"
+            multiple
+            name="profissionais"
+            formControlName="profissionais"
+            [compareWith]="compareProfissional"
+          >
+            @for (profissionalOption of profissionalsSharedCollection; track $index) {
+              <option [ngValue]="profissionalOption">{{ profissionalOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Salvar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

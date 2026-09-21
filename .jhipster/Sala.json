@@ -1,0 +1,26 @@
+{
+  "annotations": {
+    "changelogDate": "20260901012255"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "nome",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "descricao",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "capacidade",
+      "fieldType": "Integer"
+    }
+  ],
+  "name": "Sala",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

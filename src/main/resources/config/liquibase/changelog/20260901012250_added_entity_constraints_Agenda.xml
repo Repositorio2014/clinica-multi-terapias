@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity Agenda.
+    -->
+    <changeSet id="20260901012250-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="paciente_id"
+                                 baseTableName="agenda"
+                                 constraintName="fk_agenda__paciente_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="paciente"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="profissional_id"
+                                 baseTableName="agenda"
+                                 constraintName="fk_agenda__profissional_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="profissional"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="sala_id"
+                                 baseTableName="agenda"
+                                 constraintName="fk_agenda__sala_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="sala"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="especialidade_id"
+                                 baseTableName="agenda"
+                                 constraintName="fk_agenda__especialidade_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="especialidade"
+                                 />
+    </changeSet>
+</databaseChangeLog>

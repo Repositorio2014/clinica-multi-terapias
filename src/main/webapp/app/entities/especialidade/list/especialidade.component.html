@@ -1,0 +1,121 @@
+<div>
+  <h2 id="page-heading" data-cy="EspecialidadeHeading">
+    <span jhiTranslate="clinicaMultiTerapiasApp.especialidade.home.title">Especialidades</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span jhiTranslate="clinicaMultiTerapiasApp.especialidade.home.refreshListLabel">Atualizar lista</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-especialidade"
+        [routerLink]="['/especialidade/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="clinicaMultiTerapiasApp.especialidade.home.createLabel">Criar novo Especialidade</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (especialidades?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="clinicaMultiTerapiasApp.especialidade.home.notFound">Nenhum Especialidade encontrado</span>
+    </div>
+  }
+
+  @if (especialidades && especialidades.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">Código</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="nome">
+              <div class="d-flex">
+                <span jhiTranslate="clinicaMultiTerapiasApp.especialidade.nome">Nome</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="descricao">
+              <div class="d-flex">
+                <span jhiTranslate="clinicaMultiTerapiasApp.especialidade.descricao">Descricao</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="profissionais.id">
+              <div class="d-flex">
+                <span jhiTranslate="clinicaMultiTerapiasApp.especialidade.profissionais">Profissionais</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (especialidade of especialidades; track trackId(especialidade)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/especialidade', especialidade.id, 'view']">{{ especialidade.id }}</a>
+              </td>
+              <td [jhiTranslate]="'clinicaMultiTerapiasApp.TipoEspecialidade.' + (especialidade.nome ?? 'null')">
+                {{
+                  {
+                    null: '',
+                    PSIQUIATRIA: 'PSIQUIATRIA',
+                    PSICOLOGIA: 'PSICOLOGIA',
+                    PSICOPEDAGOGIA: 'PSICOPEDAGOGIA',
+                    FONOAUDIOLOGIA: 'FONOAUDIOLOGIA',
+                    TERAPIA_OCUPACIONAL: 'TERAPIA_OCUPACIONAL',
+                    NEUROPSICOLOGIA: 'NEUROPSICOLOGIA',
+                    OUTRA: 'OUTRA',
+                  }[especialidade.nome ?? 'null']
+                }}
+              </td>
+              <td>{{ especialidade.descricao }}</td>
+              <td>
+                @for (profissionais of especialidade.profissionais; track $index; let last = $last) {
+                  <span>
+                    <a class="form-control-static" [routerLink]="['/profissional', profissionais.id, 'view']">{{ profissionais.id }}</a
+                    >{{ last ? '' : ', ' }}
+                  </span>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/especialidade', especialidade.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Visualizar</span>
+                  </a>
+
+                  <a [routerLink]="['/especialidade', especialidade.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(especialidade)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Excluir</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

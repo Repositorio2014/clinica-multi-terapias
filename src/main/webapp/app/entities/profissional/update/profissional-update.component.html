@@ -1,0 +1,158 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-profissional-heading"
+        data-cy="ProfissionalCreateUpdateHeading"
+        jhiTranslate="clinicaMultiTerapiasApp.profissional.home.createOrEditLabel"
+      >
+        Criar ou editar Profissional
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="clinicaMultiTerapiasApp.profissional.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let nomeRef = editForm.get('nome')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_nome" jhiTranslate="clinicaMultiTerapiasApp.profissional.nome">Nome</label>
+          <input type="text" class="form-control" name="nome" id="field_nome" data-cy="nome" formControlName="nome" />
+          @if (nomeRef.invalid && (nomeRef.dirty || nomeRef.touched)) {
+            <div>
+              @if (editForm.get('nome')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let cpfRef = editForm.get('cpf')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_cpf" jhiTranslate="clinicaMultiTerapiasApp.profissional.cpf">Cpf</label>
+          <input type="text" class="form-control" name="cpf" id="field_cpf" data-cy="cpf" formControlName="cpf" />
+          @if (cpfRef.invalid && (cpfRef.dirty || cpfRef.touched)) {
+            <div>
+              @if (editForm.get('cpf')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let registroConselhoRef = editForm.get('registroConselho')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_registroConselho" jhiTranslate="clinicaMultiTerapiasApp.profissional.registroConselho"
+            >Registro Conselho</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="registroConselho"
+            id="field_registroConselho"
+            data-cy="registroConselho"
+            formControlName="registroConselho"
+          />
+          @if (registroConselhoRef.invalid && (registroConselhoRef.dirty || registroConselhoRef.touched)) {
+            <div>
+              @if (editForm.get('registroConselho')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let telefoneRef = editForm.get('telefone')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_telefone" jhiTranslate="clinicaMultiTerapiasApp.profissional.telefone">Telefone</label>
+          <input type="text" class="form-control" name="telefone" id="field_telefone" data-cy="telefone" formControlName="telefone" />
+          @if (telefoneRef.invalid && (telefoneRef.dirty || telefoneRef.touched)) {
+            <div>
+              @if (editForm.get('telefone')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let emailRef = editForm.get('email')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_email" jhiTranslate="clinicaMultiTerapiasApp.profissional.email">Email</label>
+          <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
+          @if (emailRef.invalid && (emailRef.dirty || emailRef.touched)) {
+            <div>
+              @if (editForm.get('email')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let ativoRef = editForm.get('ativo')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_ativo" jhiTranslate="clinicaMultiTerapiasApp.profissional.ativo">Ativo</label>
+          <input type="checkbox" class="form-check" name="ativo" id="field_ativo" data-cy="ativo" formControlName="ativo" />
+          @if (ativoRef.invalid && (ativoRef.dirty || ativoRef.touched)) {
+            <div>
+              @if (editForm.get('ativo')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_valorSessao" jhiTranslate="clinicaMultiTerapiasApp.profissional.valorSessao"
+            >Valor Sessao</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="valorSessao"
+            id="field_valorSessao"
+            data-cy="valorSessao"
+            formControlName="valorSessao"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="field_especialidades" jhiTranslate="clinicaMultiTerapiasApp.profissional.especialidades">Especialidades</label>
+          <select
+            class="form-control"
+            id="field_especialidades"
+            data-cy="especialidades"
+            multiple
+            name="especialidades"
+            formControlName="especialidades"
+            [compareWith]="compareEspecialidade"
+          >
+            @for (especialidadeOption of especialidadesSharedCollection; track $index) {
+              <option [ngValue]="especialidadeOption">{{ especialidadeOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Salvar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

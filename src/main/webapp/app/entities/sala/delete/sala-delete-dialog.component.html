@@ -1,0 +1,24 @@
+@if (sala) {
+  <form name="deleteForm" (ngSubmit)="confirmDelete(sala.id!)">
+    <div class="modal-header">
+      <h4 class="modal-title" data-cy="salaDeleteDialogHeading" jhiTranslate="entity.delete.title">Confirme a exclusão</h4>
+    </div>
+
+    <div class="modal-body">
+      <jhi-alert-error></jhi-alert-error>
+      <p id="jhi-delete-sala-heading" jhiTranslate="clinicaMultiTerapiasApp.sala.delete.question" [translateValues]="{ id: sala.id }">
+        Tem certeza de que deseja excluir Sala {{ sala.id }}?
+      </p>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+        <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+      </button>
+
+      <button id="jhi-confirm-delete-sala" data-cy="entityConfirmDeleteButton" type="submit" class="btn btn-danger">
+        <fa-icon icon="times"></fa-icon>&nbsp;<span jhiTranslate="entity.action.delete">Excluir</span>
+      </button>
+    </div>
+  </form>
+}

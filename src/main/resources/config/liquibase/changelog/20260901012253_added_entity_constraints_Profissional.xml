@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity Profissional.
+    -->
+    <changeSet id="20260901012253-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="profissional_id"
+                                 baseTableName="rel_profissional__especialidades"
+                                 constraintName="fk_rel_profissional__especialidades__profissional_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="profissional"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="especialidades_id"
+                                 baseTableName="rel_profissional__especialidades"
+                                 constraintName="fk_rel_profissional__especialidades__especialidades_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="especialidade"
+                                 />
+    </changeSet>
+</databaseChangeLog>

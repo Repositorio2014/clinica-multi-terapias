@@ -1,0 +1,31 @@
+{
+  "annotations": {
+    "changelogDate": "20260901012251"
+  },
+  "applications": "*",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "nome",
+      "fieldType": "TipoEspecialidade",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "PSIQUIATRIA,PSICOLOGIA,PSICOPEDAGOGIA,FONOAUDIOLOGIA,TERAPIA_OCUPACIONAL,NEUROPSICOLOGIA,OUTRA"
+    },
+    {
+      "fieldName": "descricao",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Especialidade",
+  "relationships": [
+    {
+      "otherEntityName": "profissional",
+      "otherEntityRelationshipName": "especialidades",
+      "relationshipName": "profissionais",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

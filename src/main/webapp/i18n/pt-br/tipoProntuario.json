@@ -1,0 +1,12 @@
+{
+  "clinicaMultiTerapiasApp": {
+    "TipoProntuario": {
+      "null": "",
+      "ANAMNESE": "ANAMNESE",
+      "EVOLUCAO": "EVOLUCAO",
+      "LAUDO": "LAUDO",
+      "ATESTADO": "ATESTADO",
+      "ENCAMINHAMENTO": "ENCAMINHAMENTO"
+    }
+  }
+}

@@ -1,0 +1,236 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-agenda-heading" data-cy="AgendaCreateUpdateHeading" jhiTranslate="clinicaMultiTerapiasApp.agenda.home.createOrEditLabel">
+        Criar ou editar Agenda
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="clinicaMultiTerapiasApp.agenda.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let dataHoraInicioRef = editForm.get('dataHoraInicio')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_dataHoraInicio" jhiTranslate="clinicaMultiTerapiasApp.agenda.dataHoraInicio"
+            >Data Hora Inicio</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_dataHoraInicio"
+              data-cy="dataHoraInicio"
+              type="datetime-local"
+              class="form-control"
+              name="dataHoraInicio"
+              formControlName="dataHoraInicio"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (dataHoraInicioRef.invalid && (dataHoraInicioRef.dirty || dataHoraInicioRef.touched)) {
+            <div>
+              @if (editForm.get('dataHoraInicio')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('dataHoraInicio')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal"
+                >Este campo é do tipo data/hora.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let dataHoraFimRef = editForm.get('dataHoraFim')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_dataHoraFim" jhiTranslate="clinicaMultiTerapiasApp.agenda.dataHoraFim">Data Hora Fim</label>
+          <div class="d-flex">
+            <input
+              id="field_dataHoraFim"
+              data-cy="dataHoraFim"
+              type="datetime-local"
+              class="form-control"
+              name="dataHoraFim"
+              formControlName="dataHoraFim"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (dataHoraFimRef.invalid && (dataHoraFimRef.dirty || dataHoraFimRef.touched)) {
+            <div>
+              @if (editForm.get('dataHoraFim')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('dataHoraFim')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal"
+                >Este campo é do tipo data/hora.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let statusRef = editForm.get('status')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_status" jhiTranslate="clinicaMultiTerapiasApp.agenda.status">Status</label>
+          <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
+            <option [ngValue]="null">{{ 'clinicaMultiTerapiasApp.StatusAgendamento.null' | translate }}</option>
+            @for (statusAgendamento of statusAgendamentoValues; track $index) {
+              <option [value]="statusAgendamento">
+                {{ 'clinicaMultiTerapiasApp.StatusAgendamento.' + statusAgendamento | translate }}
+              </option>
+            }
+          </select>
+          @if (statusRef.invalid && (statusRef.dirty || statusRef.touched)) {
+            <div>
+              @if (editForm.get('status')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_observacoes" jhiTranslate="clinicaMultiTerapiasApp.agenda.observacoes">Observacoes</label>
+          <input
+            type="text"
+            class="form-control"
+            name="observacoes"
+            id="field_observacoes"
+            data-cy="observacoes"
+            formControlName="observacoes"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_valorCobrado" jhiTranslate="clinicaMultiTerapiasApp.agenda.valorCobrado"
+            >Valor Cobrado</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="valorCobrado"
+            id="field_valorCobrado"
+            data-cy="valorCobrado"
+            formControlName="valorCobrado"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_paciente" jhiTranslate="clinicaMultiTerapiasApp.agenda.paciente">Paciente</label>
+          <select
+            class="form-control"
+            id="field_paciente"
+            data-cy="paciente"
+            name="paciente"
+            formControlName="paciente"
+            [compareWith]="comparePaciente"
+          >
+            @if (editForm.get(['paciente'])!.value == null) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (pacienteOption of pacientesSharedCollection; track $index) {
+              <option [ngValue]="pacienteOption">{{ pacienteOption.nome }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['paciente'])!.invalid && (editForm.get(['paciente'])!.dirty || editForm.get(['paciente'])!.touched)) {
+          <div>
+            @if (editForm.get(['paciente'])?.errors?.required) {
+              <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_profissional" jhiTranslate="clinicaMultiTerapiasApp.agenda.profissional">Profissional</label>
+          <select
+            class="form-control"
+            id="field_profissional"
+            data-cy="profissional"
+            name="profissional"
+            formControlName="profissional"
+            [compareWith]="compareProfissional"
+          >
+            @if (!editForm.get('profissional')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (profissionalOption of profissionalsSharedCollection; track $index) {
+              <option [ngValue]="profissionalOption">{{ profissionalOption.nome }}</option>
+            }
+          </select>
+        </div>
+        @if (
+          editForm.get(['profissional'])!.invalid && (editForm.get(['profissional'])!.dirty || editForm.get(['profissional'])!.touched)
+        ) {
+          <div>
+            @if (editForm.get(['profissional'])?.errors?.required) {
+              <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_sala" jhiTranslate="clinicaMultiTerapiasApp.agenda.sala">Sala</label>
+          <select class="form-control" id="field_sala" data-cy="sala" name="sala" formControlName="sala" [compareWith]="compareSala">
+            <option [ngValue]="null"></option>
+            @for (salaOption of salasSharedCollection; track $index) {
+              <option [ngValue]="salaOption">{{ salaOption.nome }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_especialidade" jhiTranslate="clinicaMultiTerapiasApp.agenda.especialidade"
+            >Especialidade</label
+          >
+          <select
+            class="form-control"
+            id="field_especialidade"
+            data-cy="especialidade"
+            name="especialidade"
+            formControlName="especialidade"
+            [compareWith]="compareEspecialidade"
+          >
+            @if (!editForm.get('especialidade')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (especialidadeOption of especialidadesSharedCollection; track $index) {
+              <option [ngValue]="especialidadeOption">{{ especialidadeOption.nome }}</option>
+            }
+          </select>
+        </div>
+        @if (
+          editForm.get(['especialidade'])!.invalid && (editForm.get(['especialidade'])!.dirty || editForm.get(['especialidade'])!.touched)
+        ) {
+          <div>
+            @if (editForm.get(['especialidade'])?.errors?.required) {
+              <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+            }
+          </div>
+        }
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Salvar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

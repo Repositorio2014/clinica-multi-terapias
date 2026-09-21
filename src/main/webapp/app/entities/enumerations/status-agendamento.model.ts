@@ -1,0 +1,11 @@
+export enum StatusAgendamento {
+  AGENDADO = 'AGENDADO',
+
+  CONFIRMADO = 'CONFIRMADO',
+
+  ATENDIDO = 'ATENDIDO',
+
+  FALTA = 'FALTA',
+
+  CANCELADO = 'CANCELADO',
+}

@@ -1,0 +1,74 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (paciente(); as pacienteRef) {
+      <div>
+        <h2 data-cy="pacienteDetailsHeading"><span jhiTranslate="clinicaMultiTerapiasApp.paciente.detail.title">Paciente</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">Código</span></dt>
+          <dd>
+            <span>{{ pacienteRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.paciente.nome">Nome</span></dt>
+          <dd>
+            <span>{{ pacienteRef.nome }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.paciente.cpf">Cpf</span></dt>
+          <dd>
+            <span>{{ pacienteRef.cpf }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.paciente.dataNascimento">Data Nascimento</span></dt>
+          <dd>
+            <span>{{ pacienteRef.dataNascimento | formatMediumDate }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.paciente.telefone">Telefone</span></dt>
+          <dd>
+            <span>{{ pacienteRef.telefone }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.paciente.email">Email</span></dt>
+          <dd>
+            <span>{{ pacienteRef.email }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.paciente.nomeResponsavel">Nome Responsavel</span></dt>
+          <dd>
+            <span>{{ pacienteRef.nomeResponsavel }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.paciente.telefoneResponsavel">Telefone Responsavel</span></dt>
+          <dd>
+            <span>{{ pacienteRef.telefoneResponsavel }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.paciente.endereco">Endereco</span></dt>
+          <dd>
+            <span>{{ pacienteRef.endereco }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.paciente.convenio">Convenio</span></dt>
+          <dd>
+            <span>{{ pacienteRef.convenio }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.paciente.observacoes">Observacoes</span></dt>
+          <dd>
+            <span>{{ pacienteRef.observacoes }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.paciente.ativo">Ativo</span></dt>
+          <dd>
+            <span>{{ pacienteRef.ativo }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Voltar</span>
+        </button>
+
+        <button type="button" [routerLink]="['/paciente', pacienteRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

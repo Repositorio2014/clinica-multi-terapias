@@ -1,0 +1,240 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-prontuario-heading"
+        data-cy="ProntuarioCreateUpdateHeading"
+        jhiTranslate="clinicaMultiTerapiasApp.prontuario.home.createOrEditLabel"
+      >
+        Criar ou editar Prontuario
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="clinicaMultiTerapiasApp.prontuario.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let tipoRef = editForm.get('tipo')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_tipo" jhiTranslate="clinicaMultiTerapiasApp.prontuario.tipo">Tipo</label>
+          <select class="form-control" name="tipo" formControlName="tipo" id="field_tipo" data-cy="tipo">
+            <option [ngValue]="null">{{ 'clinicaMultiTerapiasApp.TipoProntuario.null' | translate }}</option>
+            @for (tipoProntuario of tipoProntuarioValues; track $index) {
+              <option [value]="tipoProntuario">{{ 'clinicaMultiTerapiasApp.TipoProntuario.' + tipoProntuario | translate }}</option>
+            }
+          </select>
+          @if (tipoRef.invalid && (tipoRef.dirty || tipoRef.touched)) {
+            <div>
+              @if (editForm.get('tipo')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let dataAtendimentoRef = editForm.get('dataAtendimento')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_dataAtendimento" jhiTranslate="clinicaMultiTerapiasApp.prontuario.dataAtendimento"
+            >Data Atendimento</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_dataAtendimento"
+              data-cy="dataAtendimento"
+              type="datetime-local"
+              class="form-control"
+              name="dataAtendimento"
+              formControlName="dataAtendimento"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (dataAtendimentoRef.invalid && (dataAtendimentoRef.dirty || dataAtendimentoRef.touched)) {
+            <div>
+              @if (editForm.get('dataAtendimento')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('dataAtendimento')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal"
+                >Este campo é do tipo data/hora.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let tituloRef = editForm.get('titulo')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_titulo" jhiTranslate="clinicaMultiTerapiasApp.prontuario.titulo">Titulo</label>
+          <input type="text" class="form-control" name="titulo" id="field_titulo" data-cy="titulo" formControlName="titulo" />
+          @if (tituloRef.invalid && (tituloRef.dirty || tituloRef.touched)) {
+            <div>
+              @if (editForm.get('titulo')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let conteudoRef = editForm.get('conteudo')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_conteudo" jhiTranslate="clinicaMultiTerapiasApp.prontuario.conteudo">Conteudo</label>
+          <textarea class="form-control" name="conteudo" id="field_conteudo" data-cy="conteudo" formControlName="conteudo"></textarea>
+          @if (conteudoRef.invalid && (conteudoRef.dirty || conteudoRef.touched)) {
+            <div>
+              @if (editForm.get('conteudo')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let confidencialRef = editForm.get('confidencial')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_confidencial" jhiTranslate="clinicaMultiTerapiasApp.prontuario.confidencial"
+            >Confidencial</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="confidencial"
+            id="field_confidencial"
+            data-cy="confidencial"
+            formControlName="confidencial"
+          />
+          @if (confidencialRef.invalid && (confidencialRef.dirty || confidencialRef.touched)) {
+            <div>
+              @if (editForm.get('confidencial')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_paciente" jhiTranslate="clinicaMultiTerapiasApp.prontuario.paciente">Paciente</label>
+          <select
+            class="form-control"
+            id="field_paciente"
+            data-cy="paciente"
+            name="paciente"
+            formControlName="paciente"
+            [compareWith]="comparePaciente"
+          >
+            @if (editForm.get(['paciente'])!.value == null) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (pacienteOption of pacientesSharedCollection; track $index) {
+              <option [ngValue]="pacienteOption">{{ pacienteOption.nome }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['paciente'])!.invalid && (editForm.get(['paciente'])!.dirty || editForm.get(['paciente'])!.touched)) {
+          <div>
+            @if (editForm.get(['paciente'])?.errors?.required) {
+              <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_profissional" jhiTranslate="clinicaMultiTerapiasApp.prontuario.profissional"
+            >Profissional</label
+          >
+          <select
+            class="form-control"
+            id="field_profissional"
+            data-cy="profissional"
+            name="profissional"
+            formControlName="profissional"
+            [compareWith]="compareProfissional"
+          >
+            @if (!editForm.get('profissional')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (profissionalOption of profissionalsSharedCollection; track $index) {
+              <option [ngValue]="profissionalOption">{{ profissionalOption.nome }}</option>
+            }
+          </select>
+        </div>
+        @if (
+          editForm.get(['profissional'])!.invalid && (editForm.get(['profissional'])!.dirty || editForm.get(['profissional'])!.touched)
+        ) {
+          <div>
+            @if (editForm.get(['profissional'])?.errors?.required) {
+              <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_agenda" jhiTranslate="clinicaMultiTerapiasApp.prontuario.agenda">Agenda</label>
+          <select
+            class="form-control"
+            id="field_agenda"
+            data-cy="agenda"
+            name="agenda"
+            formControlName="agenda"
+            [compareWith]="compareAgenda"
+          >
+            <option [ngValue]="null"></option>
+            @for (agendaOption of agendaSharedCollection; track $index) {
+              <option [ngValue]="agendaOption">{{ agendaOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_especialidade" jhiTranslate="clinicaMultiTerapiasApp.prontuario.especialidade"
+            >Especialidade</label
+          >
+          <select
+            class="form-control"
+            id="field_especialidade"
+            data-cy="especialidade"
+            name="especialidade"
+            formControlName="especialidade"
+            [compareWith]="compareEspecialidade"
+          >
+            @if (!editForm.get('especialidade')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (especialidadeOption of especialidadesSharedCollection; track $index) {
+              <option [ngValue]="especialidadeOption">{{ especialidadeOption.nome }}</option>
+            }
+          </select>
+        </div>
+        @if (
+          editForm.get(['especialidade'])!.invalid && (editForm.get(['especialidade'])!.dirty || editForm.get(['especialidade'])!.touched)
+        ) {
+          <div>
+            @if (editForm.get(['especialidade'])?.errors?.required) {
+              <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+            }
+          </div>
+        }
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Salvar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,202 @@
+<div>
+  <h2 id="page-heading" data-cy="AgendaHeading">
+    <span jhiTranslate="clinicaMultiTerapiasApp.agenda.home.title">Agenda</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span jhiTranslate="clinicaMultiTerapiasApp.agenda.home.refreshListLabel">Atualizar lista</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-agenda"
+        [routerLink]="['/agenda/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="clinicaMultiTerapiasApp.agenda.home.createLabel">Criar novo Agenda</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <jhi-filter [filters]="filters"></jhi-filter>
+
+  @if (agenda?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="clinicaMultiTerapiasApp.agenda.home.notFound">Nenhum Agenda encontrado</span>
+    </div>
+  }
+
+  @if (agenda && agenda.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">Código</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dataHoraInicio">
+              <div class="d-flex">
+                <span jhiTranslate="clinicaMultiTerapiasApp.agenda.dataHoraInicio">Data Hora Inicio</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="dataHoraFim">
+              <div class="d-flex">
+                <span jhiTranslate="clinicaMultiTerapiasApp.agenda.dataHoraFim">Data Hora Fim</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="status">
+              <div class="d-flex">
+                <span jhiTranslate="clinicaMultiTerapiasApp.agenda.status">Status</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="observacoes">
+              <div class="d-flex">
+                <span jhiTranslate="clinicaMultiTerapiasApp.agenda.observacoes">Observacoes</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="valorCobrado">
+              <div class="d-flex">
+                <span jhiTranslate="clinicaMultiTerapiasApp.agenda.valorCobrado">Valor Cobrado</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="paciente.nome">
+              <div class="d-flex">
+                <span jhiTranslate="clinicaMultiTerapiasApp.agenda.paciente">Paciente</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="profissional.nome">
+              <div class="d-flex">
+                <span jhiTranslate="clinicaMultiTerapiasApp.agenda.profissional">Profissional</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="sala.nome">
+              <div class="d-flex">
+                <span jhiTranslate="clinicaMultiTerapiasApp.agenda.sala">Sala</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="especialidade.nome">
+              <div class="d-flex">
+                <span jhiTranslate="clinicaMultiTerapiasApp.agenda.especialidade">Especialidade</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (agenda of agenda; track trackId(agenda)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/agenda', agenda.id, 'view']">{{ agenda.id }}</a>
+              </td>
+              <td>{{ agenda.dataHoraInicio | formatMediumDatetime }}</td>
+              <td>{{ agenda.dataHoraFim | formatMediumDatetime }}</td>
+              <td [jhiTranslate]="'clinicaMultiTerapiasApp.StatusAgendamento.' + (agenda.status ?? 'null')">
+                {{
+                  {
+                    null: '',
+                    AGENDADO: 'AGENDADO',
+                    CONFIRMADO: 'CONFIRMADO',
+                    ATENDIDO: 'ATENDIDO',
+                    FALTA: 'FALTA',
+                    CANCELADO: 'CANCELADO',
+                  }[agenda.status ?? 'null']
+                }}
+              </td>
+              <td>{{ agenda.observacoes }}</td>
+              <td>{{ agenda.valorCobrado }}</td>
+              <td>
+                @if (agenda.paciente) {
+                  <div>
+                    <a [routerLink]="['/paciente', agenda.paciente.id, 'view']">{{ agenda.paciente.nome }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (agenda.profissional) {
+                  <div>
+                    <a [routerLink]="['/profissional', agenda.profissional.id, 'view']">{{ agenda.profissional.nome }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (agenda.sala) {
+                  <div>
+                    <a [routerLink]="['/sala', agenda.sala.id, 'view']">{{ agenda.sala.nome }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (agenda.especialidade) {
+                  <div>
+                    <a [routerLink]="['/especialidade', agenda.especialidade.id, 'view']">{{ agenda.especialidade.nome }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/agenda', agenda.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Visualizar</span>
+                  </a>
+
+                  <a [routerLink]="['/agenda', agenda.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(agenda)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Excluir</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (agenda && agenda.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

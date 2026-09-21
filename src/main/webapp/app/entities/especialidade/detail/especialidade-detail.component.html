@@ -1,0 +1,60 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (especialidade(); as especialidadeRef) {
+      <div>
+        <h2 data-cy="especialidadeDetailsHeading">
+          <span jhiTranslate="clinicaMultiTerapiasApp.especialidade.detail.title">Especialidade</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">Código</span></dt>
+          <dd>
+            <span>{{ especialidadeRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.especialidade.nome">Nome</span></dt>
+          <dd>
+            <span [jhiTranslate]="'clinicaMultiTerapiasApp.TipoEspecialidade.' + (especialidadeRef.nome ?? 'null')">{{
+              {
+                null: '',
+                PSIQUIATRIA: 'PSIQUIATRIA',
+                PSICOLOGIA: 'PSICOLOGIA',
+                PSICOPEDAGOGIA: 'PSICOPEDAGOGIA',
+                FONOAUDIOLOGIA: 'FONOAUDIOLOGIA',
+                TERAPIA_OCUPACIONAL: 'TERAPIA_OCUPACIONAL',
+                NEUROPSICOLOGIA: 'NEUROPSICOLOGIA',
+                OUTRA: 'OUTRA',
+              }[especialidadeRef.nome ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.especialidade.descricao">Descricao</span></dt>
+          <dd>
+            <span>{{ especialidadeRef.descricao }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.especialidade.profissionais">Profissionais</span></dt>
+          <dd>
+            @for (profissionais of especialidadeRef.profissionais; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/profissional', profissionais.id, 'view']">{{ profissionais?.id }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Voltar</span>
+        </button>
+
+        <button type="button" [routerLink]="['/especialidade', especialidadeRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

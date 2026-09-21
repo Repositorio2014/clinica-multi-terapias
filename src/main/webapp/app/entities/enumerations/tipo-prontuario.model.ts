@@ -1,0 +1,11 @@
+export enum TipoProntuario {
+  ANAMNESE = 'ANAMNESE',
+
+  EVOLUCAO = 'EVOLUCAO',
+
+  LAUDO = 'LAUDO',
+
+  ATESTADO = 'ATESTADO',
+
+  ENCAMINHAMENTO = 'ENCAMINHAMENTO',
+}

@@ -1,0 +1,31 @@
+{
+  "clinicaMultiTerapiasApp": {
+    "profissional": {
+      "home": {
+        "title": "Profissionals",
+        "refreshListLabel": "Atualizar lista",
+        "createLabel": "Criar novo Profissional",
+        "createOrEditLabel": "Criar ou editar Profissional",
+        "notFound": "Nenhum Profissional encontrado"
+      },
+      "created": "Um novo Profissional foi criado com o identificador {{ param }}",
+      "updated": "Um Profissional foi atualizado com o identificador {{ param }}",
+      "deleted": "Um Profissional foi excluído com o identificador {{ param }}",
+      "delete": {
+        "question": "Tem certeza de que deseja excluir Profissional {{ id }}?"
+      },
+      "detail": {
+        "title": "Profissional"
+      },
+      "id": "ID",
+      "nome": "Nome",
+      "cpf": "Cpf",
+      "registroConselho": "Registro Conselho",
+      "telefone": "Telefone",
+      "email": "Email",
+      "ativo": "Ativo",
+      "valorSessao": "Valor Sessao",
+      "especialidades": "Especialidades"
+    }
+  }
+}

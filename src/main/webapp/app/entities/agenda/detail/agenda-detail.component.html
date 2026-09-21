@@ -1,0 +1,86 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (agenda(); as agendaRef) {
+      <div>
+        <h2 data-cy="agendaDetailsHeading"><span jhiTranslate="clinicaMultiTerapiasApp.agenda.detail.title">Agenda</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">Código</span></dt>
+          <dd>
+            <span>{{ agendaRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.agenda.dataHoraInicio">Data Hora Inicio</span></dt>
+          <dd>
+            <span>{{ agendaRef.dataHoraInicio | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.agenda.dataHoraFim">Data Hora Fim</span></dt>
+          <dd>
+            <span>{{ agendaRef.dataHoraFim | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.agenda.status">Status</span></dt>
+          <dd>
+            <span [jhiTranslate]="'clinicaMultiTerapiasApp.StatusAgendamento.' + (agendaRef.status ?? 'null')">{{
+              { null: '', AGENDADO: 'AGENDADO', CONFIRMADO: 'CONFIRMADO', ATENDIDO: 'ATENDIDO', FALTA: 'FALTA', CANCELADO: 'CANCELADO' }[
+                agendaRef.status ?? 'null'
+              ]
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.agenda.observacoes">Observacoes</span></dt>
+          <dd>
+            <span>{{ agendaRef.observacoes }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.agenda.valorCobrado">Valor Cobrado</span></dt>
+          <dd>
+            <span>{{ agendaRef.valorCobrado }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.agenda.paciente">Paciente</span></dt>
+          <dd>
+            @if (agenda()!.paciente) {
+              <div>
+                <a [routerLink]="['/paciente', agenda()!.paciente?.id, 'view']">{{ agendaRef.paciente?.nome }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.agenda.profissional">Profissional</span></dt>
+          <dd>
+            @if (agenda()!.profissional) {
+              <div>
+                <a [routerLink]="['/profissional', agenda()!.profissional?.id, 'view']">{{ agendaRef.profissional?.nome }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.agenda.sala">Sala</span></dt>
+          <dd>
+            @if (agenda()!.sala) {
+              <div>
+                <a [routerLink]="['/sala', agenda()!.sala?.id, 'view']">{{ agendaRef.sala?.nome }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.agenda.especialidade">Especialidade</span></dt>
+          <dd>
+            @if (agenda()!.especialidade) {
+              <div>
+                <a [routerLink]="['/especialidade', agenda()!.especialidade?.id, 'view']">{{ agendaRef.especialidade?.nome }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Voltar</span>
+        </button>
+
+        <button type="button" [routerLink]="['/agenda', agendaRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

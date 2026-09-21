@@ -1,0 +1,91 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (prontuario(); as prontuarioRef) {
+      <div>
+        <h2 data-cy="prontuarioDetailsHeading"><span jhiTranslate="clinicaMultiTerapiasApp.prontuario.detail.title">Prontuario</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">Código</span></dt>
+          <dd>
+            <span>{{ prontuarioRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.prontuario.tipo">Tipo</span></dt>
+          <dd>
+            <span [jhiTranslate]="'clinicaMultiTerapiasApp.TipoProntuario.' + (prontuarioRef.tipo ?? 'null')">{{
+              {
+                null: '',
+                ANAMNESE: 'ANAMNESE',
+                EVOLUCAO: 'EVOLUCAO',
+                LAUDO: 'LAUDO',
+                ATESTADO: 'ATESTADO',
+                ENCAMINHAMENTO: 'ENCAMINHAMENTO',
+              }[prontuarioRef.tipo ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.prontuario.dataAtendimento">Data Atendimento</span></dt>
+          <dd>
+            <span>{{ prontuarioRef.dataAtendimento | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.prontuario.titulo">Titulo</span></dt>
+          <dd>
+            <span>{{ prontuarioRef.titulo }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.prontuario.conteudo">Conteudo</span></dt>
+          <dd>
+            <span>{{ prontuarioRef.conteudo }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.prontuario.confidencial">Confidencial</span></dt>
+          <dd>
+            <span>{{ prontuarioRef.confidencial }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.prontuario.paciente">Paciente</span></dt>
+          <dd>
+            @if (prontuario()!.paciente) {
+              <div>
+                <a [routerLink]="['/paciente', prontuario()!.paciente?.id, 'view']">{{ prontuarioRef.paciente?.nome }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.prontuario.profissional">Profissional</span></dt>
+          <dd>
+            @if (prontuario()!.profissional) {
+              <div>
+                <a [routerLink]="['/profissional', prontuario()!.profissional?.id, 'view']">{{ prontuarioRef.profissional?.nome }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.prontuario.agenda">Agenda</span></dt>
+          <dd>
+            @if (prontuario()!.agenda) {
+              <div>
+                <a [routerLink]="['/agenda', prontuario()!.agenda?.id, 'view']">{{ prontuarioRef.agenda?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.prontuario.especialidade">Especialidade</span></dt>
+          <dd>
+            @if (prontuario()!.especialidade) {
+              <div>
+                <a [routerLink]="['/especialidade', prontuario()!.especialidade?.id, 'view']">{{ prontuarioRef.especialidade?.nome }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Voltar</span>
+        </button>
+
+        <button type="button" [routerLink]="['/prontuario', prontuarioRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

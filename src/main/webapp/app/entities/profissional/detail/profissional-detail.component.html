@@ -1,0 +1,69 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (profissional(); as profissionalRef) {
+      <div>
+        <h2 data-cy="profissionalDetailsHeading">
+          <span jhiTranslate="clinicaMultiTerapiasApp.profissional.detail.title">Profissional</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">Código</span></dt>
+          <dd>
+            <span>{{ profissionalRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.profissional.nome">Nome</span></dt>
+          <dd>
+            <span>{{ profissionalRef.nome }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.profissional.cpf">Cpf</span></dt>
+          <dd>
+            <span>{{ profissionalRef.cpf }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.profissional.registroConselho">Registro Conselho</span></dt>
+          <dd>
+            <span>{{ profissionalRef.registroConselho }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.profissional.telefone">Telefone</span></dt>
+          <dd>
+            <span>{{ profissionalRef.telefone }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.profissional.email">Email</span></dt>
+          <dd>
+            <span>{{ profissionalRef.email }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.profissional.ativo">Ativo</span></dt>
+          <dd>
+            <span>{{ profissionalRef.ativo }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.profissional.valorSessao">Valor Sessao</span></dt>
+          <dd>
+            <span>{{ profissionalRef.valorSessao }}</span>
+          </dd>
+          <dt><span jhiTranslate="clinicaMultiTerapiasApp.profissional.especialidades">Especialidades</span></dt>
+          <dd>
+            @for (especialidades of profissionalRef.especialidades; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/especialidade', especialidades.id, 'view']">{{ especialidades?.id }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Voltar</span>
+        </button>
+
+        <button type="button" [routerLink]="['/profissional', profissionalRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

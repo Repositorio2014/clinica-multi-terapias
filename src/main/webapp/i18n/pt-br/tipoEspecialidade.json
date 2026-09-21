@@ -1,0 +1,14 @@
+{
+  "clinicaMultiTerapiasApp": {
+    "TipoEspecialidade": {
+      "null": "",
+      "PSIQUIATRIA": "PSIQUIATRIA",
+      "PSICOLOGIA": "PSICOLOGIA",
+      "PSICOPEDAGOGIA": "PSICOPEDAGOGIA",
+      "FONOAUDIOLOGIA": "FONOAUDIOLOGIA",
+      "TERAPIA_OCUPACIONAL": "TERAPIA_OCUPACIONAL",
+      "NEUROPSICOLOGIA": "NEUROPSICOLOGIA",
+      "OUTRA": "OUTRA"
+    }
+  }
+}

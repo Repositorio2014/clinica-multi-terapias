@@ -1,0 +1,12 @@
+{
+  "clinicaMultiTerapiasApp": {
+    "StatusAgendamento": {
+      "null": "",
+      "AGENDADO": "AGENDADO",
+      "CONFIRMADO": "CONFIRMADO",
+      "ATENDIDO": "ATENDIDO",
+      "FALTA": "FALTA",
+      "CANCELADO": "CANCELADO"
+    }
+  }
+}

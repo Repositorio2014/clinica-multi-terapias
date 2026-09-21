@@ -1,0 +1,175 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-paciente-heading"
+        data-cy="PacienteCreateUpdateHeading"
+        jhiTranslate="clinicaMultiTerapiasApp.paciente.home.createOrEditLabel"
+      >
+        Criar ou editar Paciente
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="clinicaMultiTerapiasApp.paciente.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let nomeRef = editForm.get('nome')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_nome" jhiTranslate="clinicaMultiTerapiasApp.paciente.nome">Nome</label>
+          <input type="text" class="form-control" name="nome" id="field_nome" data-cy="nome" formControlName="nome" />
+          @if (nomeRef.invalid && (nomeRef.dirty || nomeRef.touched)) {
+            <div>
+              @if (editForm.get('nome')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let cpfRef = editForm.get('cpf')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_cpf" jhiTranslate="clinicaMultiTerapiasApp.paciente.cpf">Cpf</label>
+          <input type="text" class="form-control" name="cpf" id="field_cpf" data-cy="cpf" formControlName="cpf" />
+          @if (cpfRef.invalid && (cpfRef.dirty || cpfRef.touched)) {
+            <div>
+              @if (editForm.get('cpf')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let dataNascimentoRef = editForm.get('dataNascimento')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_dataNascimento" jhiTranslate="clinicaMultiTerapiasApp.paciente.dataNascimento"
+            >Data Nascimento</label
+          >
+          <div class="input-group">
+            <input
+              id="field_dataNascimento"
+              data-cy="dataNascimento"
+              type="text"
+              class="form-control"
+              name="dataNascimento"
+              ngbDatepicker
+              #dataNascimentoDp="ngbDatepicker"
+              formControlName="dataNascimento"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dataNascimentoDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+          @if (dataNascimentoRef.invalid && (dataNascimentoRef.dirty || dataNascimentoRef.touched)) {
+            <div>
+              @if (editForm.get('dataNascimento')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let telefoneRef = editForm.get('telefone')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_telefone" jhiTranslate="clinicaMultiTerapiasApp.paciente.telefone">Telefone</label>
+          <input type="text" class="form-control" name="telefone" id="field_telefone" data-cy="telefone" formControlName="telefone" />
+          @if (telefoneRef.invalid && (telefoneRef.dirty || telefoneRef.touched)) {
+            <div>
+              @if (editForm.get('telefone')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_email" jhiTranslate="clinicaMultiTerapiasApp.paciente.email">Email</label>
+          <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_nomeResponsavel" jhiTranslate="clinicaMultiTerapiasApp.paciente.nomeResponsavel"
+            >Nome Responsavel</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="nomeResponsavel"
+            id="field_nomeResponsavel"
+            data-cy="nomeResponsavel"
+            formControlName="nomeResponsavel"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_telefoneResponsavel" jhiTranslate="clinicaMultiTerapiasApp.paciente.telefoneResponsavel"
+            >Telefone Responsavel</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="telefoneResponsavel"
+            id="field_telefoneResponsavel"
+            data-cy="telefoneResponsavel"
+            formControlName="telefoneResponsavel"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_endereco" jhiTranslate="clinicaMultiTerapiasApp.paciente.endereco">Endereco</label>
+          <input type="text" class="form-control" name="endereco" id="field_endereco" data-cy="endereco" formControlName="endereco" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_convenio" jhiTranslate="clinicaMultiTerapiasApp.paciente.convenio">Convenio</label>
+          <input type="text" class="form-control" name="convenio" id="field_convenio" data-cy="convenio" formControlName="convenio" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_observacoes" jhiTranslate="clinicaMultiTerapiasApp.paciente.observacoes">Observacoes</label>
+          <textarea
+            class="form-control"
+            name="observacoes"
+            id="field_observacoes"
+            data-cy="observacoes"
+            formControlName="observacoes"
+          ></textarea>
+        </div>
+
+        @let ativoRef = editForm.get('ativo')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_ativo" jhiTranslate="clinicaMultiTerapiasApp.paciente.ativo">Ativo</label>
+          <input type="checkbox" class="form-check" name="ativo" id="field_ativo" data-cy="ativo" formControlName="ativo" />
+          @if (ativoRef.invalid && (ativoRef.dirty || ativoRef.touched)) {
+            <div>
+              @if (editForm.get('ativo')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">O campo é obrigatório.</small>
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Salvar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

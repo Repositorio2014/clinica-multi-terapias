@@ -1,0 +1,48 @@
+:host {
+  display: block;
+  width: 240px;
+  min-width: 240px;
+  background: #ffffff;
+  border-right: 1px solid #ecd6e3;
+}
+
+.sidebar {
+  padding-top: 12px;
+}
+
+.menu-label {
+  color: #b8a0d0;
+  font-size: 0.7rem;
+  padding: 16px 16px 6px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.nav-link {
+  color: #6b5b7b !important;
+  padding: 11px 16px !important;
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  border-left: 3px solid transparent;
+  text-decoration: none;
+  font-size: 0.92rem;
+}
+
+.nav-link:hover {
+  background: #fdf7ff !important;
+  color: #5a365f !important;
+}
+
+.nav-link.active {
+  background: #f9f1f7 !important;
+  color: #5a365f !important;
+  border-left: 3px solid #e891b5 !important;
+  font-weight: 700;
+}
+
+.version {
+  color: #bbb;
+  font-size: 0.75rem;
+  padding: 20px 16px;
+}
